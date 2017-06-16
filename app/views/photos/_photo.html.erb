@@ -1,0 +1,4 @@
+<%# Паршал для вывода отдельной фотографии %>
+<span class="event-photo buffer-both">
+    <%= link_to image_tag(photo.photo.thumb.url), photo.photo.url, {data: {toggle: "lightbox", gallery: "gallery-event", title: photo_title(photo)}} %>
+</span>
