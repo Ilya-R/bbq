@@ -1,6 +1,6 @@
 class PhotosController < ApplicationController
   # Для каждого действия нужно получить событие, к которому привязана фотография
-  before_action :set_event, only: [:create, :destroy]
+  before_action :set_event, only: %i[create destroy]
 
   # Для действия destroy нужно получить из базы саму фотографию
   before_action :set_photo, only: [:destroy]
@@ -15,7 +15,7 @@ class PhotosController < ApplicationController
     @new_photo.user = current_user
 
     if @new_photo.save
-      #notify_subscribers(@event, @new_photo)
+      # notify_subscribers(@event, @new_photo)
       # Если фотографию удалось сохранить, редирект на событие с сообщением
       redirect_to @event, notice: I18n.t('controllers.photos.created')
     else
@@ -26,14 +26,14 @@ class PhotosController < ApplicationController
 
   # Действие для удаления фотографии
   def destroy
-    message = {notice: I18n.t('controllers.photos.destroyed')}
+    message = { notice: I18n.t('controllers.photos.destroyed') }
 
     # Проверяем, может ли пользователь удалить фотографию
     # Если может — удаляем, нет, меняем сообщение
     if current_user_can_edit?(@photo)
       @photo.destroy
     else
-      message = {alert: I18n.t('controllers.photos.error')}
+      message = { alert: I18n.t('controllers.photos.error') }
     end
 
     # И в любом случае редиректим его на событие

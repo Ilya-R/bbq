@@ -10,18 +10,17 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_can_edit?
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:account_update) {|u|
+    devise_parameter_sanitizer.for(:account_update) do |u|
       u.permit(:password, :password_confirmation, :current_password)
-    }
+    end
   end
 
   # показывает может ли текущий залогиненный юзер править эту модель
   # на вход принимаем event, или "дочерние" объекты
   def current_user_can_edit?(model)
     user_signed_in? &&
-        (model.user == current_user || # если у модели есть юзер и он залогиненный
-            # пробуем у модели взять .event и если он есть, проверяем его юзера
-            (model.try(:event).present? && model.event.user == current_user))
+      (model.user == current_user || # если у модели есть юзер и он залогиненный
+          # пробуем у модели взять .event и если он есть, проверяем его юзера
+          (model.try(:event).present? && model.event.user == current_user))
   end
-
 end

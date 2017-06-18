@@ -2,16 +2,13 @@
 #   rails g devise User
 #
 class AddDeviseToUsers < ActiveRecord::Migration
-
   # метод self.up - для накатывания миграции
   def self.up
-
     # меняем таблицу users
     change_table :users do |t|
-
       ## Database authenticatable
-      t.change :email, :string, null: false, default: "" # меняем таблицу email - новые ограничения
-      t.string :encrypted_password, null: false, default: ""
+      t.change :email, :string, null: false, default: '' # меняем таблицу email - новые ограничения
+      t.string :encrypted_password, null: false, default: ''
 
       ## Recoverable
       t.string :reset_password_token

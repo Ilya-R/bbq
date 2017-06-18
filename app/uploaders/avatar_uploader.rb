@@ -26,11 +26,11 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # А потом нужно сделать миниатюрную версию 100x100
   version :thumb do
-    process :resize_to_fit => [100, 100]
+    process resize_to_fit: [100, 100]
   end
 
   # Разрешаем для загрузки только файлы с расширением картинок
   def extension_white_list
-    %w(jpg jpeg gif png)
+    %w[jpg jpeg gif png]
   end
 end

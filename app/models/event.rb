@@ -27,7 +27,7 @@ class Event < ActiveRecord::Base
   validates :user, presence: true
 
   # заголовок должен быть, и не длиннее 255 букв
-  validates :title, presence: true, length: {maximum: 255}
+  validates :title, presence: true, length: { maximum: 255 }
 
   validates :address, presence: true
   validates :datetime, presence: true
@@ -38,4 +38,3 @@ class Event < ActiveRecord::Base
     (subscribers + [user]).uniq
   end
 end
-

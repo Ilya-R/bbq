@@ -3,18 +3,18 @@ source 'https://rubygems.org'
 # зависим от рельсов 4.2.*
 gem 'rails', '~> 4.2.6'
 
+gem 'annotate'
+gem 'carrierwave'
 gem 'devise', '~> 4.1.1'
 gem 'devise-i18n'
-gem 'rails_12factor'
-gem 'russian'
-gem 'annotate'
-gem 'omniauth'
-gem 'omniauth-vkontakte'
-gem 'carrierwave'
-gem 'rmagick'
 gem 'fog-google'
 gem 'google-api-client', '>= 0.6.2', '< 0.9'
 gem 'mime-types'
+gem 'omniauth'
+gem 'omniauth-vkontakte'
+gem 'rails_12factor'
+gem 'rmagick'
+gem 'russian'
 
 # гем, интегрирующий bootstrap
 gem 'twitter-bootstrap-rails'
@@ -30,7 +30,6 @@ group :production do
 end
 
 group :development, :test do
-  gem 'sqlite3'
   gem 'byebug'
+  gem 'sqlite3'
 end
-

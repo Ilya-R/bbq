@@ -1,13 +1,12 @@
 # Контроллер вложенного ресурса подписок
 class SubscriptionsController < ApplicationController
   # задаем родительский event для подписки
-  before_action :set_event, only: [:create, :destroy]
+  before_action :set_event, only: %i[create destroy]
 
   # задаем подписку, которую юзер хочет удалить
   before_action :set_subscription, only: [:destroy]
 
   before_action :can_user_sign_up?, only: [:create]
-
 
   def create
     # болванка для новой подписки
@@ -25,12 +24,12 @@ class SubscriptionsController < ApplicationController
   end
 
   def destroy
-    message = {notice: I18n.t('controllers.subscription.destroyed')}
+    message = { notice: I18n.t('controllers.subscription.destroyed') }
 
     if current_user_can_edit?(@subscription)
       @subscription.destroy
     else
-      message = {alert: I18n.t('controllers.subscription.error')}
+      message = { alert: I18n.t('controllers.subscription.error') }
     end
 
     redirect_to @event, message
@@ -38,12 +37,11 @@ class SubscriptionsController < ApplicationController
 
   private
 
-
   def can_user_sign_up?
     if @event.user != current_user
       true
     else
-      redirect_to @event, message= {alert: I18n.t('controllers.subscription.error')}
+      redirect_to @event, message = { alert: I18n.t('controllers.subscription.error') }
     end
   end
 

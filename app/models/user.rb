@@ -28,7 +28,7 @@
 class User < ActiveRecord::Base
   # добавляем к юзеру функции Девайза, перечисляем конкретные наборы функций
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable,
-         :omniauthable, :omniauth_providers => [:vkontakte]
+         :omniauthable, omniauth_providers: [:vkontakte]
 
   # юзер может создавать много событий
   has_many :events
@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   has_many :subscriptions
 
   # имя юзера должно быть, и не длиннее 35 букв
-  validates :name, presence: true, length: {maximum: 35}
+  validates :name, presence: true, length: { maximum: 35 }
 
   # при создании нового юзера (create), перед валидацией объекта выполнить метод set_name
   before_validation :set_name, on: :create
@@ -50,11 +50,11 @@ class User < ActiveRecord::Base
 
   # задаем юзеру случайное имя, если оно пустое
   def set_name
-    self.name = "Товарисч №#{rand(777)}" if self.name.blank?
+    self.name = "Товарисч №#{rand(777)}" if name.blank?
   end
 
   def link_subscriptions
-    Subscription.where(user_id: nil, user_email: self.email).update_all(user_id: self.id)
+    Subscription.where(user_id: nil, user_email: email).update_all(user_id: id)
   end
 
   def self.find_for_vkontakte_oauth(access_token)
@@ -80,5 +80,4 @@ class User < ActiveRecord::Base
       user.vkavatar = access_token.info.image
     end
   end
-
 end

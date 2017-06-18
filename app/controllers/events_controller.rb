@@ -1,13 +1,13 @@
 # Контроллер, управляющий событиями
 class EventsController < ApplicationController
   # встроенный в девайз фильтр - посылает незалогиненного пользователя
-  before_action :authenticate_user!, except: [:show, :index]
+  before_action :authenticate_user!, except: %i[show index]
 
   # задаем объект @event для экшена show
   before_action :set_event, only: [:show]
 
   # задаем объект @event от текущего юзера
-  before_action :set_current_user_event, only: [:edit, :update, :destroy]
+  before_action :set_current_user_event, only: %i[edit update destroy]
 
   # GET /events
   def index
@@ -27,8 +27,7 @@ class EventsController < ApplicationController
   end
 
   # GET /events/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /events
   def create
@@ -59,6 +58,7 @@ class EventsController < ApplicationController
   end
 
   private
+
   def set_current_user_event
     @event = current_user.events.find(params[:id])
   end

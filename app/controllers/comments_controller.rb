@@ -1,7 +1,7 @@
 # Контроллер вложенного ресурса комментариев
 class CommentsController < ApplicationController
   # задаем "родительский" event для коммента
-  before_action :set_event, only: [:create, :destroy]
+  before_action :set_event, only: %i[create destroy]
 
   # задаем сам коммент
   before_action :set_comment, only: [:destroy]
@@ -21,18 +21,19 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    message = {notice: I18n.t('controllers.comments.destroyed')}
+    message = { notice: I18n.t('controllers.comments.destroyed') }
 
     if current_user_can_edit?(@comment)
       @comment.destroy!
     else
-      message = {alert: I18n.t('controllers.comments.error')}
+      message = { alert: I18n.t('controllers.comments.error') }
     end
 
     redirect_to @event, message
   end
 
   private
+
   def set_event
     @event = Event.find(params[:event_id])
   end
@@ -45,10 +46,8 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:body, :user_name)
   end
 
-
   def notify_subscribers(event, comment)
-
-    if comment.user == nil
+    if comment.user.nil?
       # собираем всех подписчиков и автора события в массив мэйлов, исключаем повторяющиеся
       all_emails = (event.subscriptions.map(&:user_email) + [event.user.email]).uniq
     else

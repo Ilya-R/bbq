@@ -1,17 +1,16 @@
 Rails.application.routes.draw do
-
   # дергаем спец. девайзовский метод, который генерит все нужные ему пути
   devise_for :users
 
-  root "events#index"
+  root 'events#index'
 
   resources :events do
     # вложенный ресурс комментов
-    resources :comments, only: [:create, :destroy]
+    resources :comments, only: %i[create destroy]
 
     # вложенный ресурс подписок (см. rake routes)
-    resources :subscriptions, only: [:create, :destroy]
+    resources :subscriptions, only: %i[create destroy]
   end
 
-  resources :users, only: [:show, :edit, :update]
+  resources :users, only: %i[show edit update]
 end
