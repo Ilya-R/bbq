@@ -74,4 +74,11 @@ body {
     width: 100%;
     /* Set the fixed height of the footer here */
     height: 30px;
+    margin-bottom: 0
+}
+
+.powered{
+    margin-left: 2%;
+    margin-top: 1.5%;
+    float: right
 }
